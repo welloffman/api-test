@@ -12,15 +12,18 @@ class Auth extends Model
     protected $fillable = ['external_uuid', 'lastname', 'firstname', 'thirdname', 'birthday'];
     protected $hidden = ['uuid', 'expire_date', 'created_at', 'updated_at', 'token', 'status'];
 
-    public function isLive() {
+    public function isLive() 
+    {
         return $this->isActive() && !$this->isExpired();
     }
 
-    public function isActive() {
+    public function isActive() 
+    {
         return $this->status == 'active';
     }
 
-    public function isExpired() {
+    public function isExpired() 
+    {
         return strtotime($this->expire_date) < time();
     }
 
@@ -32,18 +35,21 @@ class Auth extends Model
         $this->status = 'active';
     }
 
-    public function updateToken() {
+    public function updateToken() 
+    {
         $this->token = $this->generateToken();
         $this->expire_date = $this->makeExpireDate();
         $this->save();
     }
 
-    public function disableToken() {
+    public function disableToken() 
+    {
         $this->status = 'disabled';
         $this->save();
     }
 
-    public function getUserData() {
+    public function getUserData() 
+    {
         return [
             'lastname' => $this->lastname,
             'firstname' => $this->firstname,
